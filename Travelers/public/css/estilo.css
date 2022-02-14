@@ -1,0 +1,10 @@
+body {
+    background-image: url(../img/mapa.jpg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: left -20%;
+}
+.selects {
+    width: 40%;
+    margin-top: 2%;
+}
