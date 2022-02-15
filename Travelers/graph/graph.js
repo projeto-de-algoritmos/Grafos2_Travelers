@@ -1,43 +1,85 @@
 var fs = require('fs');
 module.exports = class Graph {
     constructor() {
-        this.vertices = [];
-        this.adjacent = {};
-        this.edges = 0;
-  
-        this.jsonData = JSON.parse(fs.readFileSync("./data/routes.json"));
+        this.INFINITY = 1 / 0;
+        this.vertices = {};
     }
 
-    addVertex(x) {
-        this.vertices.push(x);
-        this.adjacent[x] = [];
-    }
+    addVertex = function (name, edges) {
+        this.vertices[name] = edges;
+    };
 
-    addEdge(x, y) {
-        this.adjacent[x].push(y);
-        this.adjacent[y].push(x);
-        this.edges++;
-    }
+    shortestPath = function (start, finish) {
+        var nodes = new PriorityQueue(),
+            distances = {},
+            previous = {},
+            path = [],
+            smallest, vertex, neighbor, alt;
 
-    addNode(data) {
-        data.forEach((element) => {
-            this.addVertex(element);
-        });
-    }
+        for (vertex in this.vertices) {
+            if (vertex === start) {
+                distances[vertex] = 0;
+                nodes.enqueue(0, vertex);
+            }
+            else {
+                distances[vertex] = this.INFINITY;
+                nodes.enqueue(this.INFINITY, vertex);
+            }
 
-    generateGraph(data, type) {
-        for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < this.jsonData.length; j++) {
-                if (this.jsonData[j][type] === data[i]) {
-                    this.addEdge(this.jsonData[j].Name, data[i])
+            previous[vertex] = null;
+        }
+
+        while (!nodes.isEmpty()) {
+            smallest = nodes.dequeue();
+
+            if (smallest === finish) {
+                path = [];
+
+                while (previous[smallest]) {
+                    path.push(smallest);
+                    smallest = previous[smallest];
+                }
+
+                break;
+            }
+
+            if (!smallest || distances[smallest] === this.INFINITY) {
+                continue;
+            }
+
+            for (neighbor in this.vertices[smallest]) {
+                alt = distances[smallest] + this.vertices[smallest][neighbor];
+
+                if (alt < distances[neighbor]) {
+                    distances[neighbor] = alt;
+                    previous[neighbor] = smallest;
+
+                    nodes.enqueue(alt, neighbor);
                 }
             }
         }
 
+        return path;
+    };
+}
+class PriorityQueue {
+    constructor() {
+        this._nodes = [];
     }
 
-    dijkastra() {
-
-    }
-
+    enqueue = function (priority, key) {
+        this._nodes.push({ key: key, priority: priority });
+        this.sort();
+    };
+    dequeue = function () {
+        return this._nodes.shift().key;
+    };
+    sort = function () {
+        this._nodes.sort(function (a, b) {
+            return a.priority - b.priority;
+        });
+    };
+    isEmpty = function () {
+        return !this._nodes.length;
+    };
 }
