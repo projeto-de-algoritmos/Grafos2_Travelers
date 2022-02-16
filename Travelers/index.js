@@ -17,47 +17,17 @@ app.listen(3000, () => console.log("servidor rodando"));
 
 
 const g = new Graph();
-let allCities = [
-    "Aracajú",
-    "Belém",
-    "Belo Horizonte",
-    "Boa Vista",
-    "Brasília",
-    "Campo Grande",
-    "Cuiabá",
-    "Curitiba",
-    "Florianópolis",
-    "Fortaleza",
-    "Goiânia",
-    "João Pessoa",
-    "Maceió",
-    "Manaus",
-    "Natal",
-    "Palmas",
-    "Porto Alegre",
-    "Porto Velho",
-    "Recife",
-    "Rio Branco",
-    "Rio de Janeiro",
-    "Salvador",
-    "São Luis",
-    "São Paulo",
-    "Teresina",
-    "Vitória"
-]
+for (let i = 0; i < data.length; i++) {
+    let obj = data[i];
+    let name
+    let objLiteral = {}
+    for (let key in obj) {
+        name = key.substring(0, key.indexOf(":"));
+        objLiteral[key.substring(key.indexOf(':') + 1)] = obj[key];
+    }
+    g.addVertex(name, objLiteral);
+}
 
-data.forEach(function (element) {
-
-});
-
-g.addVertex('A', { B: 7, C: 8 });
-g.addVertex('B', { A: 7, F: 2 });
-g.addVertex('C', { A: 8, F: 6, G: 4 });
-g.addVertex('D', { F: 8 });
-g.addVertex('E', { H: 1 });
-g.addVertex('F', { B: 2, C: 6, D: 8, G: 9, H: 3 });
-g.addVertex('G', { C: 4, F: 9 });
-g.addVertex('H', { E: 1, F: 3 });
 
 // Log test, with the addition of reversing the path and prepending the first node so it's more readable
-console.log(g.shortestPath('A', 'H').concat(['A']).reverse());
+console.log(g.shortestPath('Belo Horizonte', 'São Luis').concat(['Belo Horizonte']).reverse());
