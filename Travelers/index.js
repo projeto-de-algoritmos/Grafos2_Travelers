@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const Graph = require('./graph/graph.js');
+const data = require('./data/routes.json');
 app.use(express.static('public'));
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/img', express.static(__dirname + 'public/img'))
@@ -15,7 +16,39 @@ app.get('', function (req, res) {
 app.listen(3000, () => console.log("servidor rodando"));
 
 
-var g = new Graph();
+const g = new Graph();
+let allCities = [
+    "Aracajú",
+    "Belém",
+    "Belo Horizonte",
+    "Boa Vista",
+    "Brasília",
+    "Campo Grande",
+    "Cuiabá",
+    "Curitiba",
+    "Florianópolis",
+    "Fortaleza",
+    "Goiânia",
+    "João Pessoa",
+    "Maceió",
+    "Manaus",
+    "Natal",
+    "Palmas",
+    "Porto Alegre",
+    "Porto Velho",
+    "Recife",
+    "Rio Branco",
+    "Rio de Janeiro",
+    "Salvador",
+    "São Luis",
+    "São Paulo",
+    "Teresina",
+    "Vitória"
+]
+
+data.forEach(function (element) {
+
+});
 
 g.addVertex('A', { B: 7, C: 8 });
 g.addVertex('B', { A: 7, F: 2 });
