@@ -17,11 +17,12 @@ Temas:
 ## Sobre 
 Travelers tem por objetivo fazer os viajantes percorrerem o menor caminho possível em suas rotas, porém conhecendo as belas capitais brasileiras pelo caminho, calculando os menores caminhos através do Dijkstra 
 
+
 ## Screenshots
-Seguem os prints do funcionamento:
-![Pagina 1](Prints/pagina1.png)
-![Pagina 2](Prints/pagina2.png)
-![Pagina 3](Prints/pagina3.png)
+Screenshots do projeto
+	![Página 1](Travelers/Prints/pagina1.png)
+	![Página 2](Travelers/Prints/pagina2.png)
+	![Página 3](Travelers/Prints/pagina3.png)
 
 ## Instalação 
 **Linguagem**: JavaScript<br>
