@@ -2,18 +2,21 @@ const express = require('express');
 const app = express();
 const Graph = require('./graph/graph.js');
 const data = require('./data/routes.json');
+const bodyParser = require('body-parser');
 app.use(express.static('public'));
+
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/img', express.static(__dirname + 'public/img'))
 app.use('/js', express.static(__dirname + 'public/js'))
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.get('', function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 
 });
 
 
-app.listen(3000, () => console.log("servidor rodando"));
+
 
 
 const g = new Graph();
@@ -28,6 +31,15 @@ for (let i = 0; i < data.length; i++) {
     g.addVertex(name, objLiteral);
 }
 
+app.post("/rota", function (req, res) {
+    let origem = req.body.origem;
+    let destino = req.body.destino;
+    //console.log(origem)
+    //console.log(destino)
+    //res.send(origem);
+
+});
 
 // Log test, with the addition of reversing the path and prepending the first node so it's more readable
 console.log(g.shortestPath('Belo Horizonte', 'São Luis').concat(['Belo Horizonte']).reverse());
+app.listen(3000, () => console.log("servidor rodando"));
