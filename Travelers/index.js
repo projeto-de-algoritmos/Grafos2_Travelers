@@ -30,13 +30,15 @@ for (let i = 0; i < data.length; i++) {
     }
     g.addVertex(name, objLiteral);
 }
-
+app.set('view engine', 'pug')
 app.post("/rota", function (req, res) {
     let origem = req.body.origem;
     let destino = req.body.destino;
-    //console.log(origem)
-    //console.log(destino)
-    //res.send(origem);
+    let rota = g.shortestPath(origem, destino).concat([origem]).reverse()
+    res.render('../views/rota', {
+
+        title: 'Rotas', message: rota
+    });
 
 });
 
