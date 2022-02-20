@@ -15,10 +15,6 @@ app.get('', function (req, res) {
 
 });
 
-
-
-
-
 const g = new Graph();
 for (let i = 0; i < data.length; i++) {
     let obj = data[i];
@@ -30,6 +26,7 @@ for (let i = 0; i < data.length; i++) {
     }
     g.addVertex(name, objLiteral);
 }
+
 app.set('view engine', 'pug')
 app.post("/rota", function (req, res) {
     let origem = req.body.origem;
@@ -41,7 +38,4 @@ app.post("/rota", function (req, res) {
     });
 
 });
-
-// Log test, with the addition of reversing the path and prepending the first node so it's more readable
-console.log(g.shortestPath('Belo Horizonte', 'São Luis').concat(['Belo Horizonte']).reverse());
 app.listen(3000, () => console.log("servidor rodando"));

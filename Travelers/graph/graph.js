@@ -5,27 +5,28 @@ module.exports = class Graph {
         this.vertices = {};
     }
 
-    addVertex = function (name, edges) {
+    addVertex(name, edges) {
         this.vertices[name] = edges;
     };
 
-    shortestPath = function (start, finish) {
+    shortestPath(start, finish) {
         var nodes = new PriorityQueue(),
             distances = {},
             previous = {},
             path = [],
-            smallest, vertex, neighbor, alt;
+            smallest,
+            vertex,
+            neighbor,
+            alt;
 
         for (vertex in this.vertices) {
             if (vertex === start) {
                 distances[vertex] = 0;
                 nodes.enqueue(0, vertex);
-            }
-            else {
+            } else {
                 distances[vertex] = this.INFINITY;
                 nodes.enqueue(this.INFINITY, vertex);
             }
-
             previous[vertex] = null;
         }
 
@@ -34,12 +35,10 @@ module.exports = class Graph {
 
             if (smallest === finish) {
                 path = [];
-
                 while (previous[smallest]) {
                     path.push(smallest);
                     smallest = previous[smallest];
                 }
-
                 break;
             }
 
@@ -53,12 +52,10 @@ module.exports = class Graph {
                 if (alt < distances[neighbor]) {
                     distances[neighbor] = alt;
                     previous[neighbor] = smallest;
-
                     nodes.enqueue(alt, neighbor);
                 }
             }
         }
-
         return path;
     };
 }
@@ -67,19 +64,19 @@ class PriorityQueue {
         this._nodes = [];
     }
 
-    enqueue = function (priority, key) {
+    enqueue(priority, key) {
         this._nodes.push({ key: key, priority: priority });
         this.sort();
     };
-    dequeue = function () {
+    dequeue() {
         return this._nodes.shift().key;
     };
-    sort = function () {
+    sort() {
         this._nodes.sort(function (a, b) {
             return a.priority - b.priority;
         });
     };
-    isEmpty = function () {
+    isEmpty() {
         return !this._nodes.length;
     };
 }
